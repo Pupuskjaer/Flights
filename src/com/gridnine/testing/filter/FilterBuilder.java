@@ -6,42 +6,35 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Класс прденазначен для построения цепочки фильтров, которые добавляются в лист фильтров
+ * */
 public class FilterBuilder {
     static List<Filter> filterList = new ArrayList<>();
 
-    public static List<Flight> filterFlights(List<Flight> flights, Filter filter) {
-        List<Flight> filteredFlights = new ArrayList<>();
-        for (Flight flight : flights) {
-            if (filter.test(flight)) {
-                filteredFlights.add(flight);
-            }
-        }
-        return filteredFlights;
-    }
 
+
+    /**
+     * Метод билдера, который добавляет лямбду фильтрации в список, тем самым формируя цепочку фильтров
+     * @param filter лямбда фильтрации
+     *
+     */
     public FilterBuilder newFilter(Filter filter) {
         filterList.add(filter);
         return this;
     }
 
+    /**
+     * Формирует и возвращает комбинацию всех фильтров списка
+     */
     public Filter buildFilters(){
         return flight -> filterList.stream().allMatch(filter -> filter.test(flight));
     }
 
 
-/*
 
-    public static Filter filterFlightsByDuration(List<Flight> flights, LocalDateTime dep, LocalDateTime arr) {
-        Duration duration = Duration.between(dep.toLocalTime(), arr.toLocalTime());
-        return flight -> durEqualsDepAndArrTime(flight,duration);
-    }
 
-    private static boolean durEqualsDepAndArrTime(Flight flight, Duration duration) {
-        LocalDateTime arr = flight.getSegments().get(flight.getSegments().size() - 1).getArrivalDate();
-        LocalDateTime dep = flight.getSegments().get(0).getArrivalDate();
-        return Duration.between(dep.toLocalTime(), arr.toLocalTime()).toMinutes() == duration.toMinutes();
-    }
-*/
+
+
 
 }
