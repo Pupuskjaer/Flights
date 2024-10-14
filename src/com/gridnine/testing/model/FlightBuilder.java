@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 /**
  * Factory class to get sample list of flights.
  */
-public class FlightBuilder {
+public class
+FlightBuilder {
     public static List<Flight> createFlights() {
         LocalDateTime threeDaysFromNow = LocalDateTime.now().plusDays(3);
         return Arrays.asList(
